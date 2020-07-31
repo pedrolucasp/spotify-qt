@@ -58,13 +58,18 @@ bool Playlist::loadTracksFromUrl(QVector<Track> &trackList, QString &url, int of
 	return true;
 }
 
-QJsonObject Playlist::toJson(Spotify &spotify)
+QJsonObject Playlist::toJson(Spotify &spotify) const
 {
 	// Load tracks to put in JSON
 	QJsonArray jsonTracks;
 	for (auto &track : loadTracks(spotify))
 		jsonTracks.append(track.toJson());
 
+	return toJson(jsonTracks);
+}
+
+QJsonObject Playlist::toJson(const QJsonArray &jsonTracks) const
+{
 	return QJsonObject(
 		{
 			QPair<QString, bool>("collaborative", collaborative),
