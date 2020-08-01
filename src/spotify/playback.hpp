@@ -15,6 +15,7 @@ namespace spt
 		Playback();
 		explicit Playback(const QJsonObject &json);
 		QVariantMap metadata() const;
+		QJsonObject toJson() const;
 
 		int		progressMs	= 0;
 		Track	item		= Track();
