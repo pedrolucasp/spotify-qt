@@ -83,15 +83,13 @@ void Settings::load()
 	spotify.username = s["username"].toString();
 }
 
-void Settings::save()
+QJsonObject Settings::toJson()
 {
-	mutex.lock();
-
 	QJsonArray jsonHiddenSongHeaders;
 	for (auto &val : general.hiddenSongHeaders)
 		jsonHiddenSongHeaders.append(val);
 
-	QJsonObject json(
+	return QJsonObject(
 		{
 			QPair<QString, QJsonObject>("Account", {
 				{"access_token", account.accessToken},
@@ -130,11 +128,15 @@ void Settings::save()
 			})
 		}
 	);
+}
 
+void Settings::save()
+{
+	mutex.lock();
 	QDir::root().mkpath(Settings::filePath());
 	QFile file(fileName());
 	file.open(QIODevice::WriteOnly);
-	file.write(QJsonDocument(json).toJson(QJsonDocument::Indented));
+	file.write(QJsonDocument(toJson()).toJson(QJsonDocument::Indented));
 	file.close();
 	mutex.unlock();
 }

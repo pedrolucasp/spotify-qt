@@ -22,6 +22,7 @@ public:
 	virtual ~Settings();
 
 	QJsonDocument legacyToJson();
+	QJsonObject toJson();
 	void save();
 	void load();
 
