@@ -14,7 +14,5 @@ class SystemInfoDialog : public QDialog
 
 public:
 	explicit SystemInfoDialog(QWidget *parent = nullptr);
-
-private:
 	static QString systemInfo();
 };
